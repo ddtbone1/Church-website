@@ -1,115 +1,140 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ChevronDown } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+
+const navigationItems = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services & Events", href: "/services" },
+  { label: "Sermons", href: "/sermons" },
+  { label: "Ministries", href: "/ministries" },
+  { label: "Give", href: "/give" },
+  { label: "Contact", href: "/contact" },
+];
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About Us" },
-    { href: "/services", label: "Services & Events" },
-    { href: "/sermons", label: "Sermons" },
-    { href: "/ministries", label: "Ministries" },
-    { href: "/give", label: "Give" },
-    { href: "/contact", label: "Contact" },
-  ];
-
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 flex h-16 items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-3">
-          <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm">
-            BBBC
-          </div>
-          <span className="font-bold text-xl hidden sm:inline-block">
-            Basak Bible Baptist Church
-          </span>
-        </Link>
+    <>
+      {/* Glass Navigation Bar */}
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed top-0 w-full z-50 glass-nav border-b border-white/10"
+      >
+        <div className="container-center">
+          <div className="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-3 group">
+              <motion.div 
+                className="h-10 w-10 rounded-full gradient-blue flex items-center justify-center text-white font-bold text-lg shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                BBBC
+              </motion.div>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  Basak Bible Baptist Church
+                </h1>
+              </div>
+            </Link>
 
-        {/* Desktop Navigation */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-            {navItems.map((item) => (
-              <NavigationMenuItem key={item.href}>
-                <NavigationMenuLink asChild>
-                  <Link href={item.href} className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-1">
+              {navigationItems.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  <motion.div
+                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-all duration-200"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
                     {item.label}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-
-        {/* CTA Buttons */}
-        <div className="hidden md:flex items-center space-x-4">
-          <Button variant="outline" asChild>
-            <Link href="/services">Plan a Visit</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/give">Give</Link>
-          </Button>
-        </div>
-
-        {/* Mobile Navigation */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[320px] sm:w-[400px]">
-            <nav className="flex flex-col space-y-4">
-              <Link href="/" className="flex items-center space-x-3 mb-6">
-                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm">
-                  BBBC
-                </div>
-                <span className="font-bold text-lg">Basak Bible Baptist Church</span>
-              </Link>
-              
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block px-2 py-1 text-lg font-medium transition-colors hover:text-primary"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
+                  </motion.div>
                 </Link>
               ))}
-              
-              <div className="pt-4 space-y-2">
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="/services" onClick={() => setIsOpen(false)}>
-                    Plan a Visit
-                  </Link>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="hidden lg:flex items-center space-x-3">
+              <Link href="/contact">
+                <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-600">
+                  Plan a Visit
                 </Button>
-                <Button className="w-full" asChild>
-                  <Link href="/give" onClick={() => setIsOpen(false)}>
-                    Give
-                  </Link>
+              </Link>
+              <Link href="/give">
+                <Button size="sm" className="gradient-blue text-white shadow-lg hover:shadow-xl transition-all">
+                  Give
                 </Button>
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="lg:hidden"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden glass-card border-t border-white/10"
+            >
+              <div className="px-4 py-6 space-y-2">
+                {navigationItems.map((item, index) => (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className="flex items-center justify-between py-3 px-4 text-gray-700 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-all"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  </motion.div>
+                ))}
+                <div className="pt-4 space-y-2">
+                  <Link href="/contact">
+                    <Button variant="outline" size="sm" className="w-full">
+                      Plan a Visit
+                    </Button>
+                  </Link>
+                  <Link href="/give">
+                    <Button size="sm" className="w-full gradient-blue text-white">
+                      Give
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+
+      {/* Spacer for fixed navigation */}
+      <div className="h-16" />
+    </>
   );
 };
 

@@ -1,155 +1,273 @@
-import Link from "next/link";
+"use client";
+
+import { motion } from "framer-motion";
+import { ArrowRight, Play, Heart, Clock, MapPin, Users, BookOpen, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Users, Heart, BookOpen } from "lucide-react";
+import Link from "next/link";
+
+const serviceSchedule = [
+  {
+    day: "Sunday",
+    services: [
+      { time: "7:30 - 9:30 AM", type: "1st Service" },
+      { time: "10:00 AM - 12:00 PM", type: "2nd Service" },
+      { time: "1:30 - 3:00 PM", type: "Afternoon" },
+      { time: "3:30 - 5:00 PM", type: "Fellowship" }
+    ]
+  },
+  {
+    day: "Wednesday",
+    services: [
+      { time: "6:00 - 8:00 PM", type: "Midweek Service" }
+    ]
+  },
+  {
+    day: "Saturday",
+    services: [
+      { time: "8:00 - 9:00 AM", type: "Morning Watch" }
+    ]
+  }
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Welcome to Basak Bible Baptist Church
+      <section className="relative pt-20 pb-32 overflow-hidden">
+        {/* Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-blue-100" />
+        
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute top-20 left-10 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl"
+            animate={{ 
+              x: [0, 30, 0],
+              y: [0, -20, 0],
+            }}
+            transition={{ 
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-blue-300/20 rounded-full blur-3xl"
+            animate={{ 
+              x: [0, -40, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{ 
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        </div>
+
+        <div className="relative container-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center section-padding"
+          >
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              Welcome to{" "}
+              <span className="text-gradient">
+                Basak Bible Baptist Church
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8">
+            
+            <motion.p 
+              className="text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               A welcoming community of faith in Basak, Lapu-Lapu City
-            </p>
-            <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-              Join us as we grow together in faith, fellowship, and service to our community.
+            </motion.p>
+            
+            <motion.p 
+              className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Join us as we grow together in faith, fellowship, and service to our community. 
               Everyone is welcome at Basak Bible Baptist Church.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
-                <Link href="/services">Plan a Visit</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/sermons">Watch Online</Link>
-              </Button>
-              <Button size="lg" variant="secondary" asChild>
-                <Link href="/give">Give Online</Link>
-              </Button>
-            </div>
-          </div>
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <Link href="/contact">
+                <Button size="lg" className="gradient-blue text-white px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all group">
+                  Plan a Visit
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              
+              <Link href="/sermons">
+                <Button variant="outline" size="lg" className="px-8 py-4 text-lg border-2 hover:bg-blue-50 group">
+                  <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                  Watch Online
+                </Button>
+              </Link>
+              
+              <Link href="/give">
+                <Button variant="ghost" size="lg" className="px-8 py-4 text-lg hover:bg-blue-50 group">
+                  <Heart className="mr-2 h-5 w-5 text-red-500 group-hover:scale-110 transition-transform" />
+                  Give Online
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Service Times */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+      {/* Service Schedule Section */}
+      <section className="py-24 bg-white">
+        <div className="container-center section-padding">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Join Us for Worship
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <Calendar className="h-12 w-12 mx-auto mb-4 text-primary" />
-                  <h3 className="text-xl font-semibold mb-2">Sunday Services</h3>
-                  <div className="space-y-1 text-sm text-gray-600">
-                    <div>7:30 - 9:30 AM (1st Service)</div>
-                    <div>10:00 AM - 12:00 PM (2nd Service)</div>
-                    <div>1:30 - 3:00 PM (Afternoon)</div>
-                    <div>3:30 - 5:00 PM (Fellowship)</div>
-                  </div>
-                </CardContent>
-              </Card>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              We gather throughout the week for worship, fellowship, and spiritual growth
+            </p>
+          </motion.div>
 
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <Clock className="h-12 w-12 mx-auto mb-4 text-primary" />
-                  <h3 className="text-xl font-semibold mb-2">Wednesday</h3>
-                  <div className="text-sm text-gray-600">
-                    <div>6:00 - 8:00 PM</div>
-                    <div>Midweek Service</div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <Clock className="h-12 w-12 mx-auto mb-4 text-primary" />
-                  <h3 className="text-xl font-semibold mb-2">Saturday</h3>
-                  <div className="text-sm text-gray-600">
-                    <div>8:00 - 9:00 AM</div>
-                    <div>Morning Watch</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {serviceSchedule.map((schedule, index) => (
+              <motion.div
+                key={schedule.day}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="glass-card hover:shadow-xl transition-all duration-300 group">
+                  <CardContent className="p-8 text-center">
+                    <div className="mb-6">
+                      <Clock className="h-12 w-12 text-blue-500 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-gradient">
+                      {schedule.day}
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      {schedule.services.map((service, serviceIndex) => (
+                        <div key={serviceIndex} className="text-center">
+                          <p className="font-semibold text-gray-900">{service.time}</p>
+                          <p className="text-gray-600">{service.type}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Location & Contact */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Visit Us
-            </h2>
-            <Card>
-              <CardContent className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <div className="flex items-start space-x-3 mb-4">
-                      <MapPin className="h-6 w-6 text-primary mt-1" />
-                      <div>
-                        <h3 className="font-semibold mb-1">Our Location</h3>
-                        <p className="text-gray-600">
-                          Basak Mercado Sudtonggan Road<br />
-                          Lapu-Lapu City, Basak, Philippines
-                        </p>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <p><strong>Phone:</strong> 0926 634 7805</p>
-                      <p><strong>Email:</strong> biblebaptistchurchbasakllc@gmail.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <Button asChild>
-                      <Link href="/contact">Get Directions</Link>
-                    </Button>
-                  </div>
-                </div>
+      {/* Location Section */}
+      <section className="py-24 bg-gradient-to-br from-blue-50 to-white">
+        <div className="container-center section-padding">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <Card className="glass-card max-w-2xl mx-auto">
+              <CardContent className="p-12 text-center">
+                <MapPin className="h-12 w-12 text-blue-500 mx-auto mb-6" />
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Find Us</h3>
+                <p className="text-gray-600 mb-4">
+                  Basak Mercado Sudtonggan Road<br />
+                  Lapu-Lapu City, Basak, Philippines
+                </p>
+                <p className="text-gray-600 mb-6">📞 0926 634 7805</p>
+                <Link href="/contact">
+                  <Button className="gradient-blue text-white">
+                    Get Directions
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* What to Expect */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+      <section className="py-24 bg-white">
+        <div className="container-center section-padding">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               What to Expect
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <Users className="h-12 w-12 mx-auto mb-4 text-primary" />
-                <h3 className="text-xl font-semibold mb-2">Welcoming Community</h3>
-                <p className="text-gray-600">
-                  Experience warm fellowship and genuine community with people from all walks of life.
-                </p>
-              </div>
-              <div className="text-center">
-                <BookOpen className="h-12 w-12 mx-auto mb-4 text-primary" />
-                <h3 className="text-xl font-semibold mb-2">Biblical Teaching</h3>
-                <p className="text-gray-600">
-                  Grow in your faith through practical, Bible-based messages that apply to daily life.
-                </p>
-              </div>
-              <div className="text-center">
-                <Heart className="h-12 w-12 mx-auto mb-4 text-primary" />
-                <h3 className="text-xl font-semibold mb-2">Caring Ministry</h3>
-                <p className="text-gray-600">
-                  Find support, encouragement, and opportunities to serve others in our community.
-                </p>
-              </div>
-            </div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Discover what makes our church community special
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Users,
+                title: "Welcoming Community",
+                description: "Experience warm fellowship and genuine community with people from all walks of life."
+              },
+              {
+                icon: BookOpen,
+                title: "Biblical Teaching",
+                description: "Grow in your faith through practical, Bible-based messages that apply to daily life."
+              },
+              {
+                icon: Heart,
+                title: "Caring Ministry",
+                description: "Find support, encouragement, and opportunities to serve others in our community."
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <Card className="glass-card hover:shadow-xl transition-all duration-300 group h-full">
+                  <CardContent className="p-8">
+                    <item.icon className="h-12 w-12 text-blue-500 mx-auto mb-6 group-hover:scale-110 transition-transform" />
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

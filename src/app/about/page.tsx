@@ -1,21 +1,49 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Users, BookOpen, Globe } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About Basak Bible Baptist Church
+      <section className="relative pt-20 pb-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-blue-100" />
+        
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute top-20 right-10 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl"
+            animate={{ 
+              x: [0, -20, 0],
+              y: [0, 20, 0],
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        </div>
+
+        <div className="relative container-center section-padding">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+              About{" "}
+              <span className="text-gradient">
+                Basak Bible Baptist Church
+              </span>
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Serving our community with faith, hope, and love since our founding
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
