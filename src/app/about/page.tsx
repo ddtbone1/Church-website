@@ -162,7 +162,7 @@ export default function AboutPage() {
                     <Users className="h-12 w-12 text-gray-400" />
                   </div>
                   <h3 className="text-xl font-semibold mb-1">Senior Pastor</h3>
-                  <Badge variant="secondary" className="mb-3">Lead Pastor</Badge>
+                  <Badge variant="secondary" className="mb-3">Assistant Pastor</Badge>
                   <p className="text-gray-600 text-sm">
                     Leading our congregation with wisdom, compassion, and biblical teaching.
                   </p>
